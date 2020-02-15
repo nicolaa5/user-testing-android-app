@@ -7,22 +7,24 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.samla.Samla
 import com.example.samla.SamlaBuilder
+import com.example.samla.funnel.FunnelManager
 
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
+    val samla = Samla(this);
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val samla = Samla(this);
         samla.withLifeCycle(lifecycle);
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        samla.funnelManager.reachedWayPoint(1);
+
         floatingActionButton.setOnClickListener { view ->
+            samla.funnelManager.reachedWayPoint(3);
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        samla.funnelManager.reachedWayPoint(2);
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
