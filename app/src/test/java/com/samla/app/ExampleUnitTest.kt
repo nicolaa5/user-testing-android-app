@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.samla.app
 
 import org.junit.Test
 

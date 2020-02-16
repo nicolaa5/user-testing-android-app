@@ -21,6 +21,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility = "1.7"
+    }
     configurations.all {
         resolutionStrategy {
             force 'androidx.legacy:legacy-support-v4:1.0.0'
