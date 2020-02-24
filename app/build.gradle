@@ -44,3 +44,34 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+
+
+def getAPKPath = {
+    def apk = null
+    android.applicationVariants.all { variant ->
+//        if ( (variant.name).equals("release") ) {
+        variant.outputs.each { output ->
+            apk = output.outputFile
+        }
+//        }
+    }
+    println "Found output file: " + apk
+    return apk
+}
+
+// --app: The path to the application binary file.
+task buildUserFlow {
+    println "Reached"
+//    doLast {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'gcloud', 'firebase', 'test', 'android', 'run', '--app= ', "\"${getAPKPath()}\""
+            standardOutput = stdout
+        }
+        if(stdout.toString() != null)
+            return stdout.toString().trim()
+        else{ return null }
+//    }
+}
+
+build.finalizedBy(buildUserFlow)
