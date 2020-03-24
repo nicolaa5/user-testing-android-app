@@ -8,8 +8,8 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "com.example.myapplication"
-        minSdkVersion 15
+        applicationId "com.samla.usertesting"
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -21,16 +21,58 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility = "1.7"
+    }
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.legacy:legacy-support-v4:1.0.0'
+            force 'androidx.lifecycle:lifecycle-runtime:2.2.0'
+        }
+    }
 }
 
 dependencies {
+    implementation project(':sdk')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+
+
+def getAPKPath = {
+    def apk = null
+    android.applicationVariants.all { variant ->
+//        if ( (variant.name).equals("release") ) {
+        variant.outputs.each { output ->
+            apk = output.outputFile
+        }
+//        }
+    }
+    println "Found output file: " + apk
+    return apk
+}
+
+// --app: The path to the application binary file.
+task buildUserFlow {
+    println "Reached"
+//    doLast {
+        def stdout = new ByteArrayOutputStream()
+        //todo: Run commandline google cloud for sending APK to Robo test build in cloud
+//        exec {
+//            commandLine 'gcloud', 'firebase', 'test', 'android', 'run', '--app= ', "\"${getAPKPath()}\""
+//            standardOutput = stdout
+//        }
+        if(stdout.toString() != null)
+            return stdout.toString().trim()
+        else{ return null }
+//    }
+}
+
+build.finalizedBy(buildUserFlow)
