@@ -64,10 +64,11 @@ task buildUserFlow {
     println "Reached"
 //    doLast {
         def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'gcloud', 'firebase', 'test', 'android', 'run', '--app= ', "\"${getAPKPath()}\""
-            standardOutput = stdout
-        }
+        //todo: Run commandline google cloud for sending APK to Robo test build in cloud
+//        exec {
+//            commandLine 'gcloud', 'firebase', 'test', 'android', 'run', '--app= ', "\"${getAPKPath()}\""
+//            standardOutput = stdout
+//        }
         if(stdout.toString() != null)
             return stdout.toString().trim()
         else{ return null }
