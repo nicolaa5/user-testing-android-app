@@ -1,13 +1,16 @@
 package com.samla.app
 
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.samla.sdk.Samla
-
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     val samla = Samla(this);
@@ -40,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        val intent = Intent(this, SecondActivity::class.java)
+        startActivity(intent)
+
         return when(item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
