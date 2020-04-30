@@ -13,9 +13,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    val samla = Samla(this);
+    lateinit var samla : Samla;
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        samla = Samla(this);
         samla.withLifeCycle(lifecycle);
 
         super.onCreate(savedInstanceState)
